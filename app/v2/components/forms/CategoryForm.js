@@ -18,15 +18,29 @@ const style = {
   p: 4,
 };
 
-export default function CategoryForm(handler) {
-  const { register, handleSubmit } = useForm();
+export default function CategoryForm({ onSubmit, initialData, editMode }) {
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: { name: '', order: '' }
+  });
+
+  // Reset form when initialData changes
+  React.useEffect(() => {
+    if (initialData) {
+      reset({
+        name: initialData.name || '',
+        order: initialData.order || ''
+      });
+    } else {
+      reset({ name: '', order: '' });
+    }
+  }, [initialData, reset]);
   return (
     <Box sx={style}>
       <Typography id="modal-modal-title" variant="h6" component="h2">
-        Text in a modal
+        {editMode ? 'Edit Category' : 'Add New Category'}
       </Typography>
       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        <form onSubmit={handleSubmit(handler)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-4 w-fit m-4">
             <div>Category:</div>
             <div>
@@ -37,10 +51,19 @@ export default function CategoryForm(handler) {
                 className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               />
             </div>
+            <div>Order:</div>
+            <div>
+              <input
+                name="order"
+                type="number"
+                {...register("order", { required: true })}
+                className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              />
+            </div>
             <div className="col-span-2">
               <input
                 type="submit"
-                value="Add"
+                value={editMode ? "Update" : "Add"}
                 className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
               />
             </div>
