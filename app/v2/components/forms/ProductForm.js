@@ -1,9 +1,6 @@
-"use client";
-
-import React from "react";
+import { Box, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 
 const style = {
   position: 'absolute',
@@ -17,34 +14,29 @@ const style = {
   p: 4,
 };
 
-export default function ProductForm({ onSubmit, initialData, editMode, categories = [] }) {
+export default function ProductForm({ onSubmit, initialData, editMode, categories, onClose }) {
   const { register, handleSubmit, reset } = useForm({
-    defaultValues: { code: '', name: '', description: '', price: '', category: '' }
+    defaultValues: { code: '', name: '', categoryId: '', price: 0, description: '' }
   });
-
-  // Reset form when initialData changes
-  React.useEffect(() => {
-    if (initialData) {
+  useEffect(() => {
+    if(initialData) {
       reset({
         code: initialData.code || '',
         name: initialData.name || '',
         description: initialData.description || '',
-        price: initialData.price || '',
+        price: initialData.price || 0,
         category: initialData.category || ''
-      });
-    } else {
-      reset({ code: '', name: '', description: '', price: '', category: '' });
+      })
     }
   }, [initialData, reset]);
-
   return (
     <Box sx={style}>
       <Typography id="modal-modal-title" variant="h6" component="h2">
-        {editMode ? 'Edit Product' : 'Add New Product'}
+        {editMode ? 'Edit Product' : 'Add Product'}
       </Typography>
       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-2 gap-4 w-fit m-4">
+          <div className="grid grid-cols-2 gap-4 m-4">
             <div>Code:</div>
             <div>
               <input
@@ -67,9 +59,9 @@ export default function ProductForm({ onSubmit, initialData, editMode, categorie
             <div>
               <textarea
                 name="description"
+                rows="3"
                 {...register("description", { required: true })}
                 className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                rows="3"
               />
             </div>
             <div>Price:</div>
@@ -98,8 +90,17 @@ export default function ProductForm({ onSubmit, initialData, editMode, categorie
             <div className="col-span-2">
               <input
                 type="submit"
-                value={editMode ? "Update" : "Add"}
+                value={editMode ? "Edit" : "Add"}
                 className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              />
+              <input
+                type="button"
+                value="Cancel"
+                onClick={() => {
+                  reset();
+                  onClose();
+                }}
+                className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full"
               />
             </div>
           </div>
