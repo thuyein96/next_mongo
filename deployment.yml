@@ -1,0 +1,22 @@
+# --- Deployment ---
+# This manages the pods for your application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-app-deployment # The name of your deployment
+spec:
+  replicas: 1 # Start with 1 instances of your app
+  selector:
+    matchLabels:
+      app: nextjs-app # This label connects the Deployment to the Pods
+  template:
+    metadata:
+      labels:
+        app: nextjs-app # The Pods will have this label
+    spec:
+      containers:
+      - name: nextjs-app-container # The name of the container
+        # IMPORTANT: The image will be set by the Jenkins pipeline
+        image: thuyein96/nextjs-app:latest 
+        ports:
+        - containerPort: 3000 # The port your app listens on (from Dockerfile)
