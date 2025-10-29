@@ -1,16 +1,5 @@
 pipeline {
-    agent {
-        // Tell Jenkins to build a Dockerfile from the repo
-        dockerfile {
-            // Specify the name of our agent Dockerfile
-            filename 'Dockerfile.agent'
-            
-            // This is CRITICAL! 
-            // It mounts the Docker socket (from the Jenkins container)
-            // into this *new build agent container*, so it can also run docker commands.
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     environment {
         DOCKERHUB_USERNAME = 'thuyein96'
