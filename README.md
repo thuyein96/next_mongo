@@ -11,4 +11,4 @@ This app shows
 1.2 NEXT_PUBLIC_API_URL
 
 
-Add webhook to jenkins
+Add webhook to jenkins pipeline
