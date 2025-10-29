@@ -1,0 +1,15 @@
+# --- Service ---
+# This exposes your app within the cluster
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjs-app-service # The name of the service
+spec:
+  type: ClusterIP # Use ClusterIP by default (internal only)
+  # Use NodePort or LoadBalancer if you need external access
+  selector:
+    app: nextjs-app # This matches the labels on your Pods
+  ports:
+  - protocol: TCP
+    port: 80 # The port the service will be available on
+    targetPort: 3000 # The port on the container to send traffic to
