@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'docker'  // Uses any agent with 'docker' label
+        label 'docker-agent-alpine'  // Uses any agent with 'docker' label
     }
 
     environment {
