@@ -6,6 +6,7 @@ pipeline {
         APP_NAME = 'nextjs-app'
         K8S_DEPLOYMENT_NAME = 'nextjs-app-deployment'
         K8S_CONTAINER_NAME = 'nextjs-app-container'
+        dockerImage = ''
         // Do not rely on interpolation here; compute IMAGE_NAME at runtime in a script block
     }
 
@@ -21,7 +22,7 @@ pipeline {
                 script {
                     env.IMAGE_NAME = "${env.DOCKERHUB_USERNAME}/${env.APP_NAME}"
                     echo "Building Docker image: ${env.IMAGE_NAME}"
-                    sh "docker build -f Dockerfile -t ${env.IMAGE_NAME} ."
+                    dockerImage = docker.build("${env.IMAGE_NAME} .")
                 }
             }
         }
@@ -56,14 +57,14 @@ pipeline {
         }
     }
 
-    // post {
-    //     always {
-    //         script {
-    //             echo "Cleaning up local Docker image..."
-    //             sh "docker rmi ${env.IMAGE_NAME} || true"
-    //             echo "Logging out from Docker Hub..."
-    //             sh "docker logout || true"
-    //         }
-    //     }
-    // }
+    post {
+        always {
+            script {
+                echo "Cleaning up local Docker image..."
+                sh "docker rmi ${env.IMAGE_NAME} || true"
+                echo "Logging out from Docker Hub..."
+                sh "docker logout || true"
+            }
+        }
+    }
 }
