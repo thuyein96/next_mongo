@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'docker'  // Uses any agent with 'docker' label
+    }
 
     environment {
         DOCKERHUB_USERNAME = 'thuyein96'
