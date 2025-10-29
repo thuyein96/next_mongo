@@ -22,7 +22,7 @@ pipeline {
                 script {
                     env.IMAGE_NAME = "${env.DOCKERHUB_USERNAME}/${env.APP_NAME}"
                     echo "Building Docker image: ${env.IMAGE_NAME}"
-                    dockerImage = docker.build("${env.IMAGE_NAME} .")
+                    dockerImage = docker.build("${env.IMAGE_NAME}")
                 }
             }
         }
