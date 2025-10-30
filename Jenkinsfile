@@ -23,8 +23,8 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    echo "Building Docker image: ${IMAGE_NAME}"
-                    sh "docker build -f Dockerfile -t ${IMAGE_NAME} ."
+                    echo "Building Docker image: thuyein96/${APP_NAME}:latest"
+                    sh "docker build -f Dockerfile -t thuyein96/${APP_NAME}:latest ."
                 }
             }
         }
