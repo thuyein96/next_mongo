@@ -1,5 +1,8 @@
 pipeline {
-    agent any
+    dockerfile {
+        filename 'Dockerfile.agent'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
 
     environment {
         DOCKERHUB_USERNAME = 'thuyein96'
@@ -20,7 +23,8 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    sh 'docker build -t ${APP_NAME}:latest .'
+                    echo "Building Docker image: ${IMAGE_NAME}"
+                    sh "docker build -f Dockerfile -t ${IMAGE_NAME} ."
                 }
             }
         }
