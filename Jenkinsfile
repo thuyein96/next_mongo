@@ -13,9 +13,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    git 'https://github.com/thuyein96/next_mongo.git'
-                }
+                checkout scm
             }
         }
 
