@@ -1,8 +1,5 @@
 pipeline {
-    dockerfile {
-        filename 'Dockerfile.agent'
-        args '-v /var/run/docker.sock:/var/run/docker.sock'
-    }
+    agent any
 
     environment {
         DOCKERHUB_USERNAME = 'thuyein96'
