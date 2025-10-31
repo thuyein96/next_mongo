@@ -20,8 +20,9 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    echo "Building Docker image: thuyein96/${APP_NAME}:latest"
-                    sh "docker build -f Dockerfile -t thuyein96/${APP_NAME}:latest ."
+                    dockerImage = "thuyein96/${APP_NAME}:latest"
+                    echo "Building Docker image: ${dockerImage}"
+                    sh "docker build -f Dockerfile -t ${dockerImage} ."
                 }
             }
         }
@@ -34,7 +35,7 @@ pipeline {
                 script {
                     // Push using the docker pipeline API; dockerImage must be defined in Build stage
                     docker.withRegistry('https://registry.hub.docker.com', REGISTRY_CREDENTIAL) {
-                        dockerImage.push('latest')   // pushes the 'latest' tag
+                        dockerImage.push()   // pushes the 'latest' tag
                         // Optionally push other tags:
                         // dockerImage.push("v1.0.0")
                     }
