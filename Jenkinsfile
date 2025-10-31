@@ -28,19 +28,19 @@ pipeline {
         }
 
         stage('Push to Docker Hub') {
-            environment {
-                REGISTRY_CREDENTIAL = 'dockerhublogin'
-            }
-            steps {
-                script {
-                    // Push using the docker pipeline API; dockerImage must be defined in Build stage
-                    docker.withRegistry('https://registry.hub.docker.com', REGISTRY_CREDENTIAL) {
-                        dockerImage.push()   // pushes the 'latest' tag
-                        // Optionally push other tags:
-                        // dockerImage.push("v1.0.0")
+            withCredentials([usernamePassword(credentialsId: 'dockerhublogin', 
+                                                   usernameVariable: 'DOCKER_USER', 
+                                                   passwordVariable: 'DOCKER_PASS')]) {
+                    script {
+                        echo "Logging in to Docker Hub..."
+                        // Log in using 'sh'
+                        sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
+
+                        echo "Pushing image: ${dockerImage}"
+                        // Push using 'sh'
+                        sh "docker push ${dockerImage}"
                     }
                 }
-            }
         }
 
     //     stage('Deploy to Kubernetes') {
