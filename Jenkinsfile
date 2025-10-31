@@ -28,17 +28,20 @@ pipeline {
         }
 
         stage('Push to Docker Hub') {
-            withCredentials([usernamePassword(credentialsId: 'dockerhublogin', 
+            steps {
+                // Use withCredentials to securely get credentials
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', 
                                                    usernameVariable: 'DOCKER_USER', 
                                                    passwordVariable: 'DOCKER_PASS')]) {
-                script {
-                    echo "Logging in to Docker Hub..."
-                    // Log in using 'sh'
-                    sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
-
-                    echo "Pushing image: ${dockerImage}"
-                    // Push using 'sh'
-                    sh "docker push ${dockerImage}"
+                    script {
+                        echo "Logging in to Docker Hub..."
+                        // Log in using 'sh'
+                        sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
+                        
+                        echo "Pushing image: ${dockerImage} to Docker Hub..."
+                        // Push using 'sh'
+                        sh "docker push ${dockerImage}"
+                    }
                 }
             }
         }
