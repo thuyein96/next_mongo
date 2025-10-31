@@ -26,21 +26,21 @@ pipeline {
             }
         }
 
-    //     stage('Push to Docker Hub') {
-    //         environment {
-    //             REGISTRY_CREDENTIAL = 'dockerhublogin'
-    //         }
-    //         steps {
-    //             script {
-    //                 // Push using the docker pipeline API; dockerImage must be defined in Build stage
-    //                 docker.withRegistry('https://registry.hub.docker.com', REGISTRY_CREDENTIAL) {
-    //                     dockerImage.push('latest')   // pushes the 'latest' tag
-    //                     // Optionally push other tags:
-    //                     // dockerImage.push("v1.0.0")
-    //                 }
-    //             }
-    //         }
-    //     }
+        stage('Push to Docker Hub') {
+            environment {
+                REGISTRY_CREDENTIAL = 'dockerhublogin'
+            }
+            steps {
+                script {
+                    // Push using the docker pipeline API; dockerImage must be defined in Build stage
+                    docker.withRegistry('https://registry.hub.docker.com', REGISTRY_CREDENTIAL) {
+                        dockerImage.push('latest')   // pushes the 'latest' tag
+                        // Optionally push other tags:
+                        // dockerImage.push("v1.0.0")
+                    }
+                }
+            }
+        }
 
     //     stage('Deploy to Kubernetes') {
     //         steps {
