@@ -60,15 +60,15 @@ pipeline {
         }
     
 
-    // post {
-    //     always {
-    //         script {
-    //             echo "Cleaning up local Docker image..."
-    //             sh "docker rmi ${env.IMAGE_NAME} || true"
-    //             echo "Logging out from Docker Hub..."
-    //             sh "docker logout || true"
-    //         }
-    //     }
-    // }
+        post {
+            always {
+                script {
+                    echo "Cleaning up local Docker image..."
+                    sh "docker rmi ${env.IMAGE_NAME} || true"
+                    echo "Logging out from Docker Hub..."
+                    sh "docker logout || true"
+                }
+            }
+        }
     }
 }
