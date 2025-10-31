@@ -18,11 +18,13 @@ spec:
       - name: nextjs-app-container
         image: thuyein96/nextjs-app:latest
         env:
+        - name: NODE_ENV
+          value: "production"
         - name: MONGODB_URI
           valueFrom:
             secretKeyRef:
-              name: mongo-secret
-              key: uri
+              name: nextjs-secrets
+              key: mongodb-uri
         - name: API_BASE
           value: "/stock/api"
         - name: NEXT_PUBLIC_API_URL
