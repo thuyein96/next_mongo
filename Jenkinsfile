@@ -30,7 +30,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 // Use withCredentials to securely get credentials
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', 
+                withCredentials([usernamePassword(credentialsId: 'dockerhublogin', 
                                                    usernameVariable: 'DOCKER_USER', 
                                                    passwordVariable: 'DOCKER_PASS')]) {
                     script {
@@ -46,19 +46,19 @@ pipeline {
             }
         }
 
-    //     stage('Deploy to Kubernetes') {
-    //         steps {
-    //             script {
-    //                 // Option A: using the Kubernetes plugin (kubeconfigId must exist in Jenkins)
-    //                 // kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes")
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    // Option A: using the Kubernetes plugin (kubeconfigId must exist in Jenkins)
+                    // kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes")
 
-    //                 // Option B: using kubectl with a kubeconfig credential (recommended if plugin not installed)
-    //                 // Replace 'kubeconfig-cred-id' with your Jenkins credential id that stores the kubeconfig file
-    //                 kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes")
-    //             }
-    //         }
-    //     }
-    // }
+                    // Option B: using kubectl with a kubeconfig credential (recommended if plugin not installed)
+                    // Replace 'kubeconfig-cred-id' with your Jenkins credential id that stores the kubeconfig file
+                    kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes")
+                }
+            }
+        }
+    
 
     // post {
     //     always {
