@@ -29,7 +29,7 @@ kind: Service
 metadata:
   name: nextjs-app-service # The name of the service
 spec:
-  type: ClusterIP # Use ClusterIP by default (internal only)
+  type: LoadBalancer # Use ClusterIP by default (internal only)
   # Use NodePort or LoadBalancer if you need external access
   selector:
     app: nextjs-app # This matches the labels on your Pods
