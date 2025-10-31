@@ -29,7 +29,7 @@ kind: Service
 metadata:
   name: nextjs-app-service # The name of the service
 spec:
-  type: LoadBalancer # Use ClusterIP by default (internal only)
+  type: NodePort # Use NodePort if you need external access
   # Use NodePort or LoadBalancer if you need external access
   selector:
     app: nextjs-app # This matches the labels on your Pods
@@ -37,3 +37,4 @@ spec:
   - protocol: TCP
     port: 80 # The port the service will be available on
     targetPort: 3000 # The port on the container to send traffic to
+    nodePort: 30080 # The port to access the service externally (NodePort range: 30000-32767)
