@@ -31,16 +31,16 @@ pipeline {
             withCredentials([usernamePassword(credentialsId: 'dockerhublogin', 
                                                    usernameVariable: 'DOCKER_USER', 
                                                    passwordVariable: 'DOCKER_PASS')]) {
-                    script {
-                        echo "Logging in to Docker Hub..."
-                        // Log in using 'sh'
-                        sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
+                script {
+                    echo "Logging in to Docker Hub..."
+                    // Log in using 'sh'
+                    sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
 
-                        echo "Pushing image: ${dockerImage}"
-                        // Push using 'sh'
-                        sh "docker push ${dockerImage}"
-                    }
+                    echo "Pushing image: ${dockerImage}"
+                    // Push using 'sh'
+                    sh "docker push ${dockerImage}"
                 }
+            }
         }
 
     //     stage('Deploy to Kubernetes') {
