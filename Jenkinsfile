@@ -29,7 +29,7 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                // Use withCredentials to securely get credentials
+                // Use withCredentials to securely get credential
                 withCredentials([usernamePassword(credentialsId: 'dockerhublogin', 
                                                    usernameVariable: 'DOCKER_USER', 
                                                    passwordVariable: 'DOCKER_PASS')]) {
