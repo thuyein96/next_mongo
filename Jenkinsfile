@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_USERNAME = 'thuyein96'
+        DOCKERHUB_USERNAME = 'htetaungshine22'
         APP_NAME = 'nextjs-app'
         K8S_DEPLOYMENT_NAME = 'nextjs-app-deployment'
         K8S_CONTAINER_NAME = 'nextjs-app-container'
@@ -20,7 +20,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    dockerImage = "thuyein96/${APP_NAME}:latest"
+                    dockerImage = "${DOCKERHUB_USERNAME}/${APP_NAME}:latest"
                     echo "Building Docker image: ${dockerImage}"
                     sh "docker build -f Dockerfile -t ${dockerImage} ."
                 }
@@ -30,7 +30,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 // Use withCredentials to securely get credential
-                withCredentials([usernamePassword(credentialsId: 'dockerhublogin', 
+                withCredentials([usernamePassword(credentialsId: 'shinedockerhub', 
                                                    usernameVariable: 'DOCKER_USER', 
                                                    passwordVariable: 'DOCKER_PASS')]) {
                     script {
