@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nextjs-app-container
-        image: thuyein96/nextjs-app:latest
+        image: htetaungshine22/nextjs-app:latest
         env:
         - name: NODE_ENV
           value: "production"
